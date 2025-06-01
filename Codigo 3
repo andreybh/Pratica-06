@@ -1,0 +1,32 @@
+%public
+%class Scanner
+%unicode
+%line
+%column
+
+"public"        { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+"class"         { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+"static"        { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+"void"          { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+"int"           { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+"for"           { System.out.println("PALAVRA-CHAVE: " + yytext()); }
+
+[a-zA-Z_][a-zA-Z0-9_]*    { System.out.println("IDENTIFICADOR: " + yytext()); }
+
+[0-9]+            { System.out.println("NÚMERO: " + yytext()); }
+
+[ \t\r\n]+        { /* Ignorar */ }
+
+"{"               { System.out.println("SÍMBOLO: {"); }
+"}"               { System.out.println("SÍMBOLO: }"); }
+"("               { System.out.println("SÍMBOLO: ("); }
+")"               { System.out.println("SÍMBOLO: )"); }
+"["               { System.out.println("SÍMBOLO: ["); }
+"]"               { System.out.println("SÍMBOLO: ]"); }
+";"               { System.out.println("SÍMBOLO: ;"); }
+","               { System.out.println("SÍMBOLO: ,"); }
+":"               { System.out.println("SÍMBOLO: :"); }
+"."               { System.out.println("SÍMBOLO: ."); }
+"="               { System.out.println("SÍMBOLO: ="); }
+
+.                 { System.out.println("CARACTERE DESCONHECIDO: " + yytext()); }

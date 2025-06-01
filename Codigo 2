@@ -1,0 +1,47 @@
+%public
+%class C
+%unicode
+%cup
+%line
+%column
+
+%{
+import java_cup.runtime.Symbol;
+private Symbol sym(String type)  { return new Symbol(sym.valueOf(type), yyline+1, yycolumn+1); }
+private Symbol sym(String type, String val) { return new Symbol(sym.valueOf(type), yyline+1, yycolumn+1, val); }
+%}
+
+// Palavras-chave
+"int"       { return sym("INT"); }
+"main"      { return sym("MAIN"); }
+"while"     { return sym("WHILE"); }
+"return"    { return sym("RETURN"); }
+"printf"    { return sym("PRINTF"); }
+
+// Operadores e símbolos
+"="         { return sym("ASSIGN"); }
+"=="        { return sym("EQ"); }
+"<="        { return sym("LE"); }
+">="        { return sym("GE"); }
+"!="        { return sym("NE"); }
+"<"         { return sym("LT"); }
+">"         { return sym("GT"); }
+"\+\+"      { return sym("INCREMENT"); }
+"\+="       { return sym("PLUS_ASSIGN"); }
+"\+"        { return sym("PLUS"); }
+"-"         { return sym("MINUS"); }
+"\*"        { return sym("MULT"); }
+"/"         { return sym("DIV"); }
+";"         { return sym("SEMI"); }
+","         { return sym("COMMA"); }
+"\("        { return sym("LPAREN"); }
+"\)"        { return sym("RPAREN"); }
+"\{"        { return sym("LBRACE"); }
+"\}"        { return sym("RBRACE"); }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { return sym("ID", yytext()); }
+[0-9]+                  { return sym("NUM", yytext()); }
+
+[ \t\r\n]+              { /* ignora */ }
+
+.                       { throw new RuntimeException("Caractere inválido: " + yytext()); }

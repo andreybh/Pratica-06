@@ -1,0 +1,45 @@
+%%
+
+%public
+%class PascalLexer
+%unicode
+%cup
+%line
+%column
+
+%{
+import java_cup.runtime.Symbol;
+private Symbol sym(String type)  { return new Symbol(sym.valueOf(type), yyline+1, yycolumn+1); }
+private Symbol sym(String type, String val) { return new Symbol(sym.valueOf(type), yyline+1, yycolumn+1, val); }
+%}
+
+%%
+
+// Palavras-chave
+"if"        { return sym("IF"); }
+"then"      { return sym("THEN"); }
+"else"      { return sym("ELSE"); }
+"begin"     { return sym("BEGIN"); }
+"end"       { return sym("END"); }
+"writeln"   { return sym("WRITELN"); }
+"sqrt"      { return sym("SQRT"); }
+
+// Operadores e símbolos
+":="        { return sym("ATRIB"); }
+"<"         { return sym("LT"); }
+"("         { return sym("LPAREN"); }
+")"         { return sym("RPAREN"); }
+";"         { return sym("SEMI"); }
+"+"         { return sym("PLUS"); }
+"-"         { return sym("MINUS"); }
+"*"         { return sym("MULT"); }
+"/"         { return sym("DIV"); }
+
+// Identificadores, números, strings
+[a-zA-Z_][a-zA-Z0-9_]*  { return sym("ID", yytext()); }
+[0-9]+                  { return sym("NUM", yytext()); }
+\'([^\'\n]|\\')*\'      { return sym("STR", yytext()); }
+
+// Espaço e erro
+[ \t\r\n]+              { /* ignora */ }
+.                      { throw new RuntimeException("Caractere inválido: " + yytext()); }
